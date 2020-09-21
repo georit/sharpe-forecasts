@@ -91,6 +91,15 @@ body {
   margin: 0;
 }
 
+.additional-info {
+  font-size: 0.8rem;
+  margin-top: 2rem;
+}
+
+.additional-info p {
+  padding: 0.2rem 0;
+}
+
 /* !*** COPY INFO *** */
 .copy {
   position: absolute;

@@ -7,7 +7,7 @@ const mainEl = document.getElementById("main");
 // API key & URLs
 const apiKey = "3265874a2c77ae4a04bb96236a642d2f";
 const apiCurrentUrl = (locale) => {
-	return `http://api.openweathermap.org/data/2.5/weather?q=${locale}&appid=${apiKey}&units=metric`
+  return `http://api.openweathermap.org/data/2.5/weather?q=${locale}&appid=${apiKey}&units=metric`;
 };
 const apiForecastUrl = (locale) => {
   return `http://api.openweathermap.org/data/2.5/forecast?q=${locale}&appid=${apiKey}&units=metric`;
@@ -26,33 +26,42 @@ async function getCurrentWeatherData(locale) {
 
 // Get current weather data from API
 async function getForecastWeatherData(locale) {
-	const response = await fetch(apiForecastUrl(locale));
-	
-	const forecastWeatherData = await response.json();
-	console.log(forecastWeatherData);
-	
-	addWeatherDataToUI(forecastWeatherData);
+  const response = await fetch(apiForecastUrl(locale));
+
+  const forecastWeatherData = await response.json();
+  console.log(forecastWeatherData);
+
+  addWeatherDataToUI(forecastWeatherData);
 }
 
-// Display weather data 
+// Display weather data
 function addWeatherDataToUI(data) {
-	const temp = Math.round(data.main.temp);
-	const tempH = Math.round(data.main.temp_max);
-	const tempL = Math.round(data.main.temp_min);
-	
-	const weather = document.createElement('div');
-	weather.classList.add('results');
-	
-	weather.innerHTML = `
+  const temp = Math.round(data.main.temp);
+  const tempH = Math.round(data.main.temp_max);
+  const tempL = Math.round(data.main.temp_min);
+
+  const weather = document.createElement("div");
+  weather.classList.add("results");
+
+  weather.innerHTML = `
 		<h3 class="location">${data.name}, ${data.sys.country}</h1>
+		<p class="conditions"><small>${data.weather[0].main}</small></p>
+		<img src="https://openweathermap.org/img/w/${
+      data.weather[0].icon
+    }.png" class="conditions-img">
 		<h1 class="current-temp">${temp}&#8451;</h1>
 		<p class="high-low">H:${tempH}&deg; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L:${tempL}&deg;</p>
+		<div class="additional-info">
+			<p>Feels Like: ${Math.floor(data.main.feels_like)}&#8451;</p>
+			<p>Humidity: ${data.main.humidity}%</p>
+			<p>Wind: ${data.wind.speed.toFixed(1)}m/s</p>
+		</div>
 	`;
-	
-	// Clean up HTML
-	main.innerHTML = "";
-	// Display data to user interface
-	main.appendChild(weather);
+
+  // Clean up HTML
+  main.innerHTML = "";
+  // Display data to user interface
+  main.appendChild(weather);
 }
 
 // *** EVENT LISTENERS ***
