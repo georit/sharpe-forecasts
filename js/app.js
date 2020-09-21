@@ -36,25 +36,54 @@ async function getForecastWeatherData(locale) {
 
 // Display weather data
 function addWeatherDataToUI(data) {
+  // Temperature
   const temp = Math.round(data.main.temp);
   const tempH = Math.round(data.main.temp_max);
   const tempL = Math.round(data.main.temp_min);
+
+  // Rain
+  const rain = () => {
+    let rainfall;
+
+    if (data.rain === undefined) {
+      rainfall = 0;
+    } else {
+      let rainAmnt = data.rain["1h"];
+      rainfall = Math.round(rainAmnt);
+    }
+
+    return rainfall;
+  };
+
+  // Wind
+  const wind = () => {
+    let windSpeed;
+
+    if (data.wind.speed === undefined) {
+      windSpeed = 0;
+    } else {
+      let speed = data.wind.speed;
+      windSpeed = Math.round(speed);
+    }
+
+    return windSpeed;
+  };
 
   const weather = document.createElement("div");
   weather.classList.add("results");
 
   weather.innerHTML = `
 		<h3 class="location">${data.name}, ${data.sys.country}</h1>
-		<p class="conditions"><small>${data.weather[0].main}</small></p>
 		<img src="https://openweathermap.org/img/w/${
       data.weather[0].icon
     }.png" class="conditions-img">
 		<h1 class="current-temp">${temp}&#8451;</h1>
-		<p class="high-low">H:${tempH}&deg; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L:${tempL}&deg;</p>
+		<p class="high-low">H : ${tempH}&deg; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L : ${tempL}&deg;</p>
 		<div class="additional-info">
 			<p>Feels Like: ${Math.floor(data.main.feels_like)}&#8451;</p>
 			<p>Humidity: ${data.main.humidity}%</p>
-			<p>Wind: ${data.wind.speed.toFixed(1)}m/s</p>
+			<p>Wind: ${wind()}m/s</p>
+			<p>Rain: ${rain()}mm</p>
 		</div>
 	`;
 
@@ -65,6 +94,47 @@ function addWeatherDataToUI(data) {
 }
 
 // *** EVENT LISTENERS ***
+// On load
+window.addEventListener("load", () => {
+  const mostPopularCitiesInTheWorld = [
+    "London",
+    "Tokyo",
+    "New York",
+    "Paris",
+    "Singapore",
+    "Gaborone",
+    "Bangkok",
+    "Hong Kong",
+    "Shanghai",
+    "Barcelona",
+    "Beijing",
+    "Los Angeles",
+    "Seoul",
+    "Mexico City",
+    "Moscow",
+    "Sydney",
+    "Mumbai",
+    "Rome",
+    "Dubai",
+    "Berlin",
+    "Madrid",
+    "São Paulo",
+    "Rio de Janeiro",
+    "Delhi",
+    "Durban",
+    "Johannesburg",
+    "Cairo",
+    "Nairobi",
+    "Victoria Falls",
+  ];
+
+  const randomNum = Math.floor(
+    Math.random() * mostPopularCitiesInTheWorld.length
+  );
+
+  getCurrentWeatherData(mostPopularCitiesInTheWorld[randomNum]);
+});
+
 // Search button
 btnSearch.addEventListener("click", () => {
   const locale = searchInput.value;

@@ -82,6 +82,10 @@ body {
   margin-top: 4rem;
 }
 
+.conditions-img {
+  transform: scale(1.5);
+}
+
 .current-temp {
   font-size: 4rem;
   font-weight: 200;
@@ -93,11 +97,20 @@ body {
 
 .additional-info {
   font-size: 0.8rem;
-  margin-top: 2rem;
+  padding-top: 2rem;
 }
 
 .additional-info p {
   padding: 0.2rem 0;
+}
+
+.conditions-img {
+  padding-top: 1rem;
+  transform: scale(1.5);
+}
+.conditions-img {
+  padding-top: 1rem;
+  transform: scale(1.5);
 }
 
 /* !*** COPY INFO *** */
@@ -116,4 +129,37 @@ body {
 
 .designer {
   font-weight: 400;
+}
+
+/* !*** MEDIA QUERIES *** */
+/* Small phones maximum width 320px */
+@media only screen and (max-width: 330px) {
+  body {
+    font-size: 0.8rem;
+    padding-top: 10vh;
+  }
+
+  /* !*** SEARCH *** */
+  .search-input,
+  .btn-search {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.8rem;
+  }
+
+  /* !*** SEARCH BUTTON *** */
+  .btn-search {
+    margin-left: -3.5px;
+  }
+
+  /* !*** RESULTS DISPLAY *** */
+  .location {
+    font-size: 2rem;
+    font-weight: 400;
+    margin-top: 2rem;
+  }
+
+  /* !*** COPY INFO *** */
+  .copy {
+    font-size: 0.2rem;
+  }
 }
