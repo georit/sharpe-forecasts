@@ -9,29 +9,25 @@ const apiKey = "3265874a2c77ae4a04bb96236a642d2f";
 const apiCurrentUrl = (locale) => {
   return `http://api.openweathermap.org/data/2.5/weather?q=${locale}&appid=${apiKey}&units=metric`;
 };
-const apiForecastUrl = (locale) => {
-  return `http://api.openweathermap.org/data/2.5/forecast?q=${locale}&appid=${apiKey}&units=metric`;
-};
 
 // *** FUNCTIONS ***
 // Get current weather data from API
 async function getCurrentWeatherData(locale) {
-  const response = await fetch(apiCurrentUrl(locale));
+  try {
+    // Fetch data from API
+    const response = await fetch(apiCurrentUrl(locale));
+    // Convert data to JSON format
+    const currentWeatherData = await response.json();
 
-  const currentWeatherData = await response.json();
-  console.log(currentWeatherData);
-
-  addWeatherDataToUI(currentWeatherData);
-}
-
-// Get current weather data from API
-async function getForecastWeatherData(locale) {
-  const response = await fetch(apiForecastUrl(locale));
-
-  const forecastWeatherData = await response.json();
-  console.log(forecastWeatherData);
-
-  addWeatherDataToUI(forecastWeatherData);
+    // Inject data to user interface
+    addWeatherDataToUI(currentWeatherData);
+  } catch {
+    mainEl.innerHTML = `
+    <div class="no-results">
+    <img class="no-results-img" src="./img/sad_face.png">
+    <p>Sorry, there are no weather results for <span class="search-word">"${searchInput.value}"</span>. Try searching for a different location</p>
+    </div>`;
+  }
 }
 
 // Display weather data
@@ -49,7 +45,7 @@ function addWeatherDataToUI(data) {
       rainfall = 0;
     } else {
       let rainAmnt = data.rain["1h"];
-      rainfall = Math.round(rainAmnt);
+      rainfall = rainAmnt.toFixed(2);
     }
 
     return rainfall;
@@ -69,9 +65,12 @@ function addWeatherDataToUI(data) {
     return windSpeed;
   };
 
+  // Create a div to hold data
   const weather = document.createElement("div");
+  // Add style to the div
   weather.classList.add("results");
 
+  // Add weather data to the div
   weather.innerHTML = `
 		<h3 class="location">${data.name}, ${data.sys.country}</h1>
 		<img src="https://openweathermap.org/img/w/${
@@ -88,14 +87,13 @@ function addWeatherDataToUI(data) {
 	`;
 
   // Clean up HTML
-  main.innerHTML = "";
+  mainEl.innerHTML = "";
   // Display data to user interface
-  main.appendChild(weather);
+  mainEl.appendChild(weather);
 }
 
-// *** EVENT LISTENERS ***
-// On load
-window.addEventListener("load", () => {
+// Display weather info for random city
+function getRandomCityWeather() {
   const mostPopularCitiesInTheWorld = [
     "London",
     "Tokyo",
@@ -114,7 +112,7 @@ window.addEventListener("load", () => {
     "Moscow",
     "Sydney",
     "Mumbai",
-    "Rome",
+    "Hanoi",
     "Dubai",
     "Berlin",
     "Madrid",
@@ -133,14 +131,21 @@ window.addEventListener("load", () => {
   );
 
   getCurrentWeatherData(mostPopularCitiesInTheWorld[randomNum]);
-});
+}
+
+// *** EVENT LISTENERS ***
+// On load
+window.addEventListener("load", getRandomCityWeather);
 
 // Search button
 btnSearch.addEventListener("click", () => {
+  // Clear html
+  mainEl.innerHTML = "";
   const locale = searchInput.value;
 
   if (locale) {
     getCurrentWeatherData(locale);
-    getForecastWeatherData(locale);
+  } else {
+    mainEl.innerHTML = `<p class="no-text-entered">No text entered, please search for a location.<p>`;
   }
 });
