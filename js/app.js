@@ -155,12 +155,8 @@ function userTypedSomething () {
   }
 }
 
-// *** EVENT LISTENERS ***
-// On load
-window.addEventListener("load", getRandomCityWeather);
-
-// Search button
-btnSearch.addEventListener("click", () => {
+// Submit search 
+function submitSearchTerm () {
   // Hide clear search button
   HideBtnClearSearch();
   
@@ -174,6 +170,15 @@ btnSearch.addEventListener("click", () => {
   } else {
     mainEl.innerHTML = `<p class="no-text-entered">No text entered, please search for a location.<p>`;
   }
+}
+
+// *** EVENT LISTENERS ***
+// On load
+window.addEventListener("load", getRandomCityWeather);
+
+// Search button
+btnSearch.addEventListener("click", () => {
+  submitSearchTerm();
 });
 
 // Search input
@@ -185,8 +190,12 @@ searchInput.addEventListener("focusout", () => {
   HideBtnClearSearch();
 });
 
-searchInput.addEventListener("keyup", () => {
+searchInput.addEventListener("keyup", (e) => {
+  if (e.code === 'Enter') {
+    submitSearchTerm();
+  } else { 
   userTypedSomething();
+  }
 });
 
 // Clear search button
