@@ -2,6 +2,7 @@
 // Search
 const searchInput = document.getElementById("search-input");
 const btnSearch = document.getElementById("btn-search");
+const btnClearSearch = document.getElementById("btn-clear-search");
 // Results
 const mainEl = document.getElementById("main");
 // API key & URLs
@@ -133,19 +134,63 @@ function getRandomCityWeather() {
   getCurrentWeatherData(mostPopularCitiesInTheWorld[randomNum]);
 }
 
+// Show clear search button
+function showBtnClearSearch() {
+  btnClearSearch.classList.add("show-btn-clear-search");
+}
+
+// Hide clear search button
+function HideBtnClearSearch() {
+  btnClearSearch.classList.remove("show-btn-clear-search");
+}
+
+// Show/hide clear search button based on whether user has typed in something or not
+function userTypedSomething () {
+  let searchTerm = searchInput.value;
+  
+  if (searchTerm.length > 0) {
+    showBtnClearSearch();
+  } else {
+    HideBtnClearSearch();
+  }
+}
+
 // *** EVENT LISTENERS ***
 // On load
 window.addEventListener("load", getRandomCityWeather);
 
 // Search button
 btnSearch.addEventListener("click", () => {
+  // Hide clear search button
+  HideBtnClearSearch();
+  
   // Clear html
   mainEl.innerHTML = "";
+  
+  // Get weather data
   const locale = searchInput.value;
-
   if (locale) {
     getCurrentWeatherData(locale);
   } else {
     mainEl.innerHTML = `<p class="no-text-entered">No text entered, please search for a location.<p>`;
   }
+});
+
+// Search input
+searchInput.addEventListener("focusin", () => {
+  userTypedSomething();
+});
+
+searchInput.addEventListener("focusout", () => {
+  HideBtnClearSearch();
+});
+
+searchInput.addEventListener("keyup", () => {
+  userTypedSomething();
+});
+
+// Clear search button
+btnClearSearch.addEventListener("click", () => {
+  searchInput.value = "";
+  HideBtnClearSearch();
 });
