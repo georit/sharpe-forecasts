@@ -175,6 +175,10 @@ body {
   font-size: 0.75rem;
 }
 
+.heart {
+  color: var(--primary-color);
+}
+
 .designer {
   font-weight: 400;
 }
