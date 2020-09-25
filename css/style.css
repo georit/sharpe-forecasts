@@ -20,10 +20,10 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background: #19c3fb;
   background: -moz-linear-gradient(to bottom, #19c3fb, #1c9cf6, #1d71f2);
   background: -webkit-linear-gradient(to bottom, #19c3fb, #1c9cf6, #1d71f2);
   background: linear-gradient(to bottom, #19c3fb, #1c9cf6, #1d71f2);
+  background: #19c3fb;
   color: var(--primary-color);
   font-family: var(--primary-font-family);
   font-size: 16px;
@@ -175,9 +175,15 @@ body {
 
 /* !*** MEDIA QUERIES *** */
 /* Laptops & large screens minimum width 1199.98px */
-@media only screen and (min-width: 1199.98px) {
+@media only screen and (min-width: 1200px) {
   .btn-clear-search {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 1199.98px) {
+  html {
+    background-color: #19c3fb;
   }
 }
 
