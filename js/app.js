@@ -8,7 +8,7 @@ const mainEl = document.getElementById("main");
 // API key & URLs
 const apiKey = "3265874a2c77ae4a04bb96236a642d2f";
 const apiCurrentUrl = (locale) => {
-  return `http://api.openweathermap.org/data/2.5/weather?q=${locale}&appid=${apiKey}&units=metric`;
+  return `https://api.openweathermap.org/data/2.5/weather?q=${locale}&appid=${apiKey}&units=metric`;
 };
 
 // *** FUNCTIONS ***
