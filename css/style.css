@@ -57,6 +57,10 @@ body {
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
   max-width: 60vw;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
 }
 
 .search-input:focus {

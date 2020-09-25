@@ -188,7 +188,10 @@ searchInput.addEventListener("focusin", () => {
 
 searchInput.addEventListener("keyup", (e) => {
   if (e.code === "Enter") {
+    // Submit search term
     submitSearchTerm();
+    // Hide keyboard
+    searchInput.blur();
   } else {
     userTypedSomething();
   }
