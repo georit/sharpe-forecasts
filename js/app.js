@@ -145,9 +145,9 @@ function HideBtnClearSearch() {
 }
 
 // Show/hide clear search button based on whether user has typed in something or not
-function userTypedSomething () {
+function userTypedSomething() {
   let searchTerm = searchInput.value;
-  
+
   if (searchTerm.length > 0) {
     showBtnClearSearch();
   } else {
@@ -155,14 +155,14 @@ function userTypedSomething () {
   }
 }
 
-// Submit search 
-function submitSearchTerm () {
+// Submit search
+function submitSearchTerm() {
   // Hide clear search button
   HideBtnClearSearch();
-  
+
   // Clear html
   mainEl.innerHTML = "";
-  
+
   // Get weather data
   const locale = searchInput.value;
   if (locale) {
@@ -186,20 +186,17 @@ searchInput.addEventListener("focusin", () => {
   userTypedSomething();
 });
 
-searchInput.addEventListener("focusout", () => {
-  HideBtnClearSearch();
-});
-
 searchInput.addEventListener("keyup", (e) => {
-  if (e.code === 'Enter') {
+  if (e.code === "Enter") {
     submitSearchTerm();
-  } else { 
-  userTypedSomething();
+  } else {
+    userTypedSomething();
   }
 });
 
 // Clear search button
 btnClearSearch.addEventListener("click", () => {
+  console.log(`I'll be a millionaire ten years from now!`);
   searchInput.value = "";
   HideBtnClearSearch();
 });
